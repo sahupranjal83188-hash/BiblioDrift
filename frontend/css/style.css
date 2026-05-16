@@ -4629,14 +4629,17 @@ body.night-mode .tooltip-author {
 .reader-perspectives {
     padding: 6rem 10%;
 
-    background:
-      linear-gradient(
-        to bottom,
-        transparent,
-        rgba(255,255,255,0.25),
-        transparent
-      );
+    background: radial-gradient(
+        circle at top center,
+        rgba(214, 188, 160, 0.45) 0%,
+        rgba(214, 188, 160, 0.18) 35%,
+        transparent 75%
+    );
+    border-top: 1px solid rgba(0,0,0,0.04);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
 }
+
+
 
 .perspective-grid {
     display: grid;
