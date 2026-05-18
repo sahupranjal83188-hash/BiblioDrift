@@ -282,6 +282,7 @@ function renderAuthNavigation(authLink, tooltip, isAuthenticated) {
         authLink.innerHTML = '<i class="fa-solid fa-user"></i> Profile';
         authLink.href = 'profile.html';
         authLink.classList.remove('active');
+        authLink.setAttribute('aria-label', 'View profile');
         if (tooltip) tooltip.innerHTML = '<i class="fa-solid fa-id-card"></i> View Profile';
         return;
     }
@@ -314,16 +315,19 @@ async function verifyStoredAuthSession() {
         }
 
         try {
-            const headers = {};
+            const headers = {
+              ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+            };
             const csrf = getCookie('csrf_access_token');
             if (csrf) {
                 headers['X-CSRF-TOKEN'] = csrf;
             }
 
             const response = await fetch(`${MOOD_API_BASE}/auth/verify`, {
-                method: 'GET',
                 credentials: 'include',
                 headers,
+                method: 'GET',
+                credentials: 'include',
             });
 
             if (response.ok) {
@@ -2721,10 +2725,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     const verifiedUser = await verifyStoredAuthSession();
-    const isLoggedIn = !!libManager.getUser() || !!verifiedUser; // Rely on user object instead of forgeable flag
+    const isLoggedIn = !!verifiedUser;
     const authLink = document.getElementById('navAuthLink');
     const tooltip = document.getElementById('navAuthTooltip');
-    renderAuthNavigation(authLink, tooltip, Boolean(verifiedUser));
+    renderAuthNavigation(authLink, tooltip, isLoggedIn);
 
     // Redirect if already logged in and on the sign-in page
     if (verifiedUser && window.location.pathname.endsWith('auth.html')) {
