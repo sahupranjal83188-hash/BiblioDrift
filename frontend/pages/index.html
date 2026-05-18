@@ -62,6 +62,10 @@
           <span class="tooltip-text"><i class="fa-solid fa-wand-magic-sparkles"></i> Explore books</span>
         </div>
         <div class="tooltip">
+          <a href="vault.html">My Vault</a>
+          <span class="tooltip-text"><i class="fa-solid fa-vault"></i> My Vault</span>
+        </div>
+        <div class="tooltip">
           <a href="library.html">My Library</a>
           <span class="tooltip-text"><i class="fa-solid fa-book"></i> My Library</span>
         </div>
@@ -87,7 +91,7 @@
       <p>A curated sanctuary for those who read through emotions.</p>
     </section>
 
-    <!-- SEARCH RESULTS SECTION (Initially Hidden) -->
+    
     <section id="search-results-section" class="curated-section" hidden>
       <div class="section-header">
         <h2 id="search-query-display">Search Results</h2>
@@ -101,11 +105,11 @@
         </div>
       </div>
       <div class="curated-row" id="search-results-grid">
-        <!-- Dynamically Appended Books -->
+      
       </div>
     </section>
 
-    <!-- Curated Sections -->
+   
     <section class="curated-section">
       <div class="section-header">
         <h2>Rainy Evening Reads</h2>
@@ -146,7 +150,6 @@
       <div class="curated-row" id="row-fiction"></div>
     </section>
 
-    <!-- Genre Grid Section -->
     <section class="curated-section genre-section">
       <div class="section-header">
         <h2>Browse by Genre</h2>
@@ -167,8 +170,6 @@
         <div class="genre-card" data-genre="history"><i class="fa-solid fa-landmark"></i><span>History</span></div>
       </div>
     </section>
-
-    <!-- Genre Modal -->
     <dialog id="genre-modal" class="genre-modal">
       <div class="genre-modal-content">
         <div class="genre-modal-header">
@@ -180,8 +181,6 @@
         </div>
       </div>
     </dialog>
-
-    <!-- Book Details Modal -->
     <dialog id="book-details-modal" class="glass-modal">
       <div class="modal-content">
         <button class="close-modal-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -218,8 +217,46 @@
     </dialog>
   </main>
 
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img style="height: 40px" src="../assets/images/biblioDrift_favicon.png" alt="BiblioDrift Logo"> BiblioDrift
+        </a>
+        <p class="footer-tagline">"There is no frigate like a book to take us lands away."</p>
+        <p class="footer-subtext">&mdash; Emily Dickinson</p>
+      </div>
+      <div class="footer-nav">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="index.html">Discovery</a></li>
+          <li><a href="vault.html">My Vault</a></li>
+          <li><a href="library.html">My Library</a></li>
+          <li><a href="chat.html">Literary Chat</a></li>
+        </ul>
+      </div>
+      <div class="footer-legal">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h3>Connect</h3>
+        <div class="social-icons">
+          <a href="https://www.linkedin.com/in/devanshi5malhotra/" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com/devanshi14malhotra/BiblioDrift" target="_blank" rel="noopener noreferrer"
+            title="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BiblioDrift. Curated with <i class="fa-solid fa-heart"></i> for book lovers.</p>
+    </div>
+  </footer>
 
-<!--The footer is being called usingt footer.js.-->
   <script src="../js/config.js"></script>
   <script src="../js/security.js"></script>
   <script src="../js/app.js"></script>
@@ -283,6 +320,10 @@
 
   <script src="../js/ambient.js"></script>
   <script src="../js/security.js"></script>
+  <script src="../js/pwa.js"></script>
+  <script src="../script/vault.js"></script>
+
+</body>
 
 </body>
 

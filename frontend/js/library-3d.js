@@ -252,20 +252,6 @@ const SAMPLE_BOOKS = {
         }
     ]
 };
-
-const StorageHelper = {
-    get: function(key) {
-        return typeof SafeStorage !== 'undefined' ? SafeStorage.get(key) : localStorage.getItem(key);
-    },
-    set: function(key, value) {
-        if (typeof SafeStorage !== 'undefined') {
-            SafeStorage.set(key, value);
-        } else {
-            localStorage.setItem(key, value);
-        }
-    }
-};
-
 // Action to cache or remove book from local IndexedDB
 async function toggleOfflineBook(book, buttonElement) {
     try {
@@ -310,7 +296,6 @@ class BookshelfRenderer3D {
         this._modalBackdropHandler = null;
         this._escHandler = null;
         this._escListenerAttached = false;
-        this.assetsLoaded = false;
 
         // Create live region for screen reader announcements
         this.liveRegion = document.createElement('div');
@@ -534,7 +519,7 @@ class BookshelfRenderer3D {
         }
 
         const storageKey = 'bibliodrift_library';
-        return JSON.parse(StorageHelper.get(storageKey)) || {
+        return JSON.parse(localStorage.getItem(storageKey)) || {
             current: [],
             want: [],
             finished: []
@@ -1075,13 +1060,6 @@ class BookshelfRenderer3D {
         });
         this.addManagedListener(window, 'bibliodrift:library-manager-synced', () => {
             this.refreshShelves();
-        });
-
-        // Attach global ESC listener for modal exactly once
-        this.addManagedListener(document, 'keydown', (e) => {
-            if (e.key === 'Escape' && this.modal && this.modal.classList.contains('active')) {
-                this.closeModal();
-            }
         });
 
         // Setup modal close handlers
@@ -1786,7 +1764,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
 
         // Find current shelf for this book
         const storageKey = 'bibliodrift_library';
-        const localLibrary = JSON.parse(StorageHelper.get(storageKey)) || {};
+        const localLibrary = JSON.parse(localStorage.getItem(storageKey)) || {};
         let currentShelfForProgress = 'want';
         ['current', 'want', 'finished'].forEach(shelf => {
             const found = (localLibrary[shelf] || []).find(b => b.id === book.id || (b.volumeInfo && b.id === book.id));
@@ -1912,12 +1890,12 @@ spine.addEventListener('blur', () => this.hideTooltip());
                                 await window.libManager.updateBook(book.id, { progress: newProgress });
                             } else {
                                 // Fallback: update localStorage directly
-                                const lib = JSON.parse(StorageHelper.get('bibliodrift_library')) || {};
+                                const lib = JSON.parse(localStorage.getItem('bibliodrift_library')) || {};
                                 ['current', 'want', 'finished'].forEach(shelf => {
                                     const b = (lib[shelf] || []).find(x => x.id === book.id);
                                     if (b) b.progress = newProgress;
                                 });
-                                StorageHelper.set('bibliodrift_library', JSON.stringify(lib));
+                                localStorage.setItem('bibliodrift_library', JSON.stringify(lib));
                             }
 
                             // Update the book object in memory
@@ -2382,6 +2360,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         if (this.modal) {
             this.modal.classList.remove('active');
             document.body.style.overflow = '';
+            this.removeEscListener();
 
             // Reset flip after transition
             setTimeout(() => {
@@ -2393,6 +2372,14 @@ spine.addEventListener('blur', () => this.hideTooltip());
                 fixedControls.forEach(el => el.style.opacity = '1');
                 fixedControls.forEach(el => el.style.pointerEvents = 'auto');
             }, 500);
+        }
+    }
+
+    removeEscListener() {
+        if (this._escHandler && this._escListenerAttached) {
+            document.removeEventListener('keydown', this._escHandler);
+            this._escListenerAttached = false;
+            this._escHandler = null;
         }
     }
 
@@ -2444,6 +2431,17 @@ spine.addEventListener('blur', () => this.hideTooltip());
                 }
             };
             this.addManagedListener(this.modal, 'click', this._modalBackdropHandler);
+        }
+
+        // ESC key to close - attach only once, remove on close
+        if (!this._escListenerAttached) {
+            this._escHandler = (e) => {
+                if (e.key === 'Escape' && this.modal && this.modal.classList.contains('active')) {
+                    this.closeModal();
+                }
+            };
+            document.addEventListener('keydown', this._escHandler);
+            this._escListenerAttached = true;
         }
 
         // Add to library button logic
@@ -2520,7 +2518,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
 
         // Get existing library from localStorage
         const storageKey = 'bibliodrift_library';
-        let library = JSON.parse(StorageHelper.get(storageKey)) || {
+        let library = JSON.parse(localStorage.getItem(storageKey)) || {
             current: [],
             want: [],
             finished: []
@@ -2545,7 +2543,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
             }
         });
 
-        StorageHelper.set(storageKey, JSON.stringify(library));
+        localStorage.setItem(storageKey, JSON.stringify(library));
         console.log(`Added ${book.title} to library`);
     }
 
@@ -2563,7 +2561,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         }
 
         const storageKey = 'bibliodrift_library';
-        const localLibrary = JSON.parse(StorageHelper.get(storageKey)) || {};
+        const localLibrary = JSON.parse(localStorage.getItem(storageKey)) || {};
 
         // Find existing lists
         if (!localLibrary[fromShelf]) localLibrary[fromShelf] = [];
@@ -2586,7 +2584,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         localLibrary[toShelf].push(book);
 
         // Save and refresh
-        StorageHelper.set(storageKey, JSON.stringify(localLibrary));
+        localStorage.setItem(storageKey, JSON.stringify(localLibrary));
         this.refreshShelves();
 
         // Visual Feedback (optional)
@@ -2601,7 +2599,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         }
 
         const storageKey = 'bibliodrift_library';
-        const localLibrary = JSON.parse(StorageHelper.get(storageKey)) || {};
+        const localLibrary = JSON.parse(localStorage.getItem(storageKey)) || {};
 
         let removed = false;
         ['current', 'want', 'finished'].forEach(shelf => {
@@ -2613,7 +2611,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         });
 
         if (removed) {
-            StorageHelper.set(storageKey, JSON.stringify(localLibrary));
+            localStorage.setItem(storageKey, JSON.stringify(localLibrary));
             this.refreshShelves();
             this.announceToScreenReader(`Book removed from library`);
             console.log(`Removed book ${bookId}`);
@@ -2653,7 +2651,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         });
 
         if (found) {
-            StorageHelper.set(storageKey, JSON.stringify(localLibrary));
+            localStorage.setItem(storageKey, JSON.stringify(localLibrary));
             this.refreshShelves();
         }
     }
@@ -2684,7 +2682,7 @@ spine.addEventListener('blur', () => this.hideTooltip());
         
         // Gather all books
         const storageKey = 'bibliodrift_library';
-        const localLibrary = JSON.parse(StorageHelper.get(storageKey)) || {
+        const localLibrary = JSON.parse(localStorage.getItem(storageKey)) || {
             current: [],
             want: [],
             finished: []
