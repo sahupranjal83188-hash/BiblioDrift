@@ -286,9 +286,9 @@
     </div>
   </div>
 
-  <script src="../js/theme-manager.js"></script>
+  <!-- <script src="../js/theme-manager.js"></script>
   <script src="../js/ambient.js"></script>
-  <script src="../js/security.js"></script>
+  <script src="../js/security.js"></script> -->
 
 </body>
 
@@ -318,19 +318,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Load saved theme
-    const savedTheme = localStorage.getItem(STORAGE_KEY) || 'light';
-    applyTheme(savedTheme);
+    // const savedTheme = localStorage.getItem(STORAGE_KEY) || 'light';
+    // applyTheme(savedTheme);
 
-    // Toggle on click
-    btn.addEventListener('click', function () {
-        const current =
-            document.documentElement.getAttribute('data-theme') === 'night'
-                ? 'night'
-                : 'light';
+    // // Toggle on click
+    // btn.addEventListener('click', function () {
+    //     const current =
+    //         document.documentElement.getAttribute('data-theme') === 'night'
+    //             ? 'night'
+    //             : 'light';
 
-        const next = current === 'night' ? 'light' : 'night';
-        applyTheme(next);
-    });
+    //     const next = current === 'night' ? 'light' : 'night';
+    //     applyTheme(next);
+    // });
 });
 </script>
 

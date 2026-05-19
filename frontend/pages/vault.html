@@ -17,11 +17,14 @@
   <link rel="icon" href="/assets/images/biblioDrift_favicon.png" type="image/png">
 
   <script>
-    (function () {
-      const theme = localStorage.getItem('bibliodrift_theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
+(function () {
+  const theme = localStorage.getItem("bibliodrift_theme");
+
+  if (theme === "night") {
+    document.documentElement.setAttribute("data-theme", "night");
+  }
+})();
+</script>
 
   <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
 
@@ -695,30 +698,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      const themeToggle = document.getElementById("themeToggle");
-      
-      function updateThemeToggleButton(currentTheme) {
-        const icon = themeToggle.querySelector("i");
-        if (currentTheme === "night" || currentTheme === "dark") {
-          icon.className = "fa-solid fa-sun";
-          themeToggle.setAttribute("title", "Switch to Light Mode");
-        } else {
-          icon.className = "fa-solid fa-moon";
-          themeToggle.setAttribute("title", "Switch to Dark Mode");
-        }
-      }
-
-      updateThemeToggleButton(document.documentElement.getAttribute('data-theme'));
-
-      themeToggle.addEventListener("click", () => {
-        const activeTheme = document.documentElement.getAttribute('data-theme');
-        const nextTheme = (activeTheme === "dark" || activeTheme === "night") ? "light" : "dark";
-        
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        localStorage.setItem('bibliodrift_theme', nextTheme);
-        if (typeof restoreTheme === 'function') restoreTheme();
-        updateThemeToggleButton(nextTheme);
-      });
 
       // Dexie Storage Sandbox setup
       const db = new Dexie("BiblioDriftPrivateVault");
