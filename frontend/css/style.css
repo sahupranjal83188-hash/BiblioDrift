@@ -5358,6 +5358,88 @@ input:checked+.slider {
 input:checked+.slider:before {
     transform: translateX(14px);
 }
+
+.bookseller-note-card {
+    margin-top: 1.5rem;
+    padding: 1.4rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.12);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.bookseller-note-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.bookseller-note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.bookseller-note-label {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-gold);
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+}
+
+.bookseller-note-text {
+    color: var(--text-secondary);
+    line-height: 1.9;
+    font-size: 0.97rem;
+    font-style: italic;
+}
+
+.bookseller-context-hint {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    opacity: 0.7;
+    letter-spacing: 0.4px;
+    color: var(--text-muted);
+}
+
+.immersive-mood-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: var(--accent-gold);
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.fade-in-note {
+    animation: immersiveFade 0.45s ease;
+}
+
+@keyframes immersiveFade {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
 html, body {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path fill='%23cca43b' d='M4.42 20.58a1 1 0 0 0 1.41 0L15.24 11.2l-2.44-2.44L3.42 18.17a1 1 0 0 0 0 1.41zM17.36 9.08l-2.44-2.44 2.12-2.12a2 2 0 0 1 2.83 0l1.77 1.77a2 2 0 0 1 0 2.83z'/><path stroke='%23cca43b' stroke-width='1.5' d='M2 22l4-1'/></svg>") 0 24, auto !important;
 }
@@ -5761,3 +5843,4 @@ body { cursor: none; }
     --header-bg: var(--theme-bg) !important;
     --accent-gold: var(--theme-accent) !important;
 }
+
