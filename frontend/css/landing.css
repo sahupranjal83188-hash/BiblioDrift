@@ -1920,3 +1920,20 @@ html[data-theme='night'] .landing-icon-btn:hover,
 html[data-theme='night'] .btn-ghost:hover {
     background: rgba(255, 255, 255, 0.15);
 }
+
+html[data-theme='night'] .about-card,
+html[data-theme='night'] .mini-feature-card,
+html[data-theme='night'] .blossom-toggle {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme='night'] .about-mood-pill,
+html[data-theme='night'] .about-floating-chip,
+html[data-theme='night'] .secondary-about-btn {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='night'] .blossom-toggle:hover,
+html[data-theme='night'] .secondary-about-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
